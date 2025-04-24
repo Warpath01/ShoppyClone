@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const Order = require('../models/order');
+const axios = require('axios');
 
 exports.showOrders = async (req, res) => {
     try {
@@ -17,8 +18,18 @@ exports.createOrder = async (req, res) => {
         if (!product) {
             return res.status(404).send('Product not found.');
         }
-
         await Order.create({ product: req.params.id });
+
+        const webhookUrl = 'https://hooks.zapier.com/hooks/catch/22643748/2xn0ysy/'; // Replace with your actual Zapier URL
+        await axios.post(webhookUrl, {
+            productId,
+            quantity,
+            totalAmount,
+            customerId,
+            status,
+        });
+        
+         res.json(order);
         res.redirect('/orders');
     } catch (err) {
         console.error(err);
