@@ -26,7 +26,7 @@ exports.createOrder = async (req, res) => {
         await Order.create({ product: productId });
 
         // Prepare webhook payload
-        const webhookUrl = 'https://your-webhook-url.com'; // replace with actual URL
+        const webhookUrl = 'https://hooks.zapier.com/hooks/catch/22643748/2xn0ysy/'; // replace with actual URL
         await axios.post(webhookUrl, {
             name: product.name,
             price: product.price,
