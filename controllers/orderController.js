@@ -33,11 +33,19 @@ exports.createOrder = async (req, res) => {
   product_description: product.description
 };
 
-await axios.post(webhookUrl, payload, {
-  headers: {
-    'Content-Type': 'application/json'
+if (webhookUrl) {
+  try {
+    await axios.post(webhookUrl, payload, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  } catch (error) {
+    console.error('Failed to send webhook:', error.message);
   }
-});
+} else {
+  console.log('No webhook URL provided.');
+}
 
         // Redirect after success
         res.redirect('/orders');
