@@ -8,7 +8,7 @@
     "dev": "nodemon app.js",
     "seed": "node seeder.js",
     "start": "node ./app.js",
-    "build": "npm i express mongoose dotenv"
+    "build": "npm i express mongoose dotenv axios"
   },
   "keywords": [],
   "author": "",
