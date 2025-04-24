@@ -8,7 +8,7 @@
     "dev": "nodemon app.js",
     "seed": "node seeder.js",
     "start": "node ./app.js",
-    "build": "echo \"No build step required\""
+    "build": "npm i express mongoose dotenv"
   },
   "keywords": [],
   "author": "",
