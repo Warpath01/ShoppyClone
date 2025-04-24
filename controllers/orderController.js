@@ -5,6 +5,28 @@ const axios = require('axios');
 exports.showOrders = async (req, res) => {
     try {
         const orders = await Order.find().populate('product');
+
+const webhookUrl = process.env.WEBHOOK_URL; // replace with actual URL
+       const payload = {
+  product_name: orders.name,
+  product_price: orders.price,
+  product_description: orders.description
+};
+
+if (webhookUrl) {
+  try {
+    await axios.post(webhookUrl, payload, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  } catch (error) {
+    console.error('Failed to send webhook:', error.message);
+  }
+} else {
+  console.log('No webhook URL provided.');
+}
+        
         res.render('orders', { orders });
     } catch (err) {
         console.error(err);
