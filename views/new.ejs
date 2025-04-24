@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Product</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <header>
+        <h2><a href="/">Product Dashboard</a></h2>
+        <nav>
+            <a href="/">Back to Products</a>
+        </nav>
+    </header>
+
+    <main>
+        <h3>Add a New Product</h3>
+        <form action="/products" method="POST" class="product-form">
+            <div>
+                <input type="text" name="name" placeholder="Product Name" required>
+            </div>
+            <div>
+                <input type="number" name="price" placeholder="Price ($)" required step="0.01" min="0">
+            </div>
+            <div>
+                <textarea name="description" placeholder="Description" rows="4"></textarea>
+            </div>
+            <div>
+                <button type="submit">Create Product</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <small>&copy; <%= new Date().getFullYear() %> Product App</small>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+
+<body>
+    <header>
+        <h2><a href="/">Product Dashboard</a></h2>
+        <nav>
+            <a href="/products/new">Add New Product</a>
+            <a href="/orders">View Orders</a>
+        </nav>
+    </header>
+
+    <main>
+        <h3>Our Products</h3>
+        <section style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <% products.forEach(p=> { %>
+                <article
+                    style="padding: 1rem; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <h4 style="margin-top: 0;">
+                        <%= p.name %>
+                    </h4>
+                    <p><strong>$<%= p.price %></strong></p>
+                    <p>
+                        <%= p.description %>
+                    </p>
+                    <p><a href="/products/<%= p._id %>/edit">Edit</a></p>
+                    <form action="/orders/<%= p._id %>" method="POST" style="display:inline">
+                        <button type="submit">Order</button>
+                    </form>
+                </article>
+                <% }) %>
+        </section>
+    </main>
+
+    <footer>
+        <small>&copy; <%= new Date().getFullYear() %> Product App</small>
+    </footer>
+</body>
+
+</html>
