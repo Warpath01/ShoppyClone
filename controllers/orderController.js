@@ -14,43 +14,33 @@ exports.showOrders = async (req, res) => {
 
 exports.createOrder = async (req, res) => {
     try {
-        // Find the product by id
-        const product = await Product.findById(req.params.id);
-        
-        // Check if the product exists
+        const productId = req.params.id;
+
+        // Find the product
+        const product = await Product.findById(productId);
         if (!product) {
             return res.status(404).send('Product not found');
         }
 
-        // Create a new order with the product details
-        await Order.create({
-            product: product._id,  // Store the product id in the order
-            name: product.name,
-            price: product.price,
-            description: product.description
-        });
+        // Create the order
+        await Order.create({ product: productId });
 
-
-        const webhookUrl = 'https://hooks.zapier.com/hooks/catch/22643748/2xn0ysy/'; 
-
-        // Send data to Zapier Webhook
+        // Prepare webhook payload
+        const webhookUrl = 'https://your-webhook-url.com'; // replace with actual URL
         await axios.post(webhookUrl, {
-            productId: product._id,
             name: product.name,
             price: product.price,
             description: product.description
         });
 
-          res.status(201).json({
-            message: 'Order created successfully',
-            order: order
-        });
+        // Redirect after success
+        res.redirect('/orders');
     } catch (error) {
-        // Handle errors if any
-        console.error(error);
-        res.status(500).send('Server error');
+        console.error('Error creating order or sending webhook:', error);
+        res.status(500).send('Internal Server Error');
     }
 };
+
 
 
 exports.deleteOrder = async (req, res) => {
