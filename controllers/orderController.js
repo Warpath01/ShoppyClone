@@ -5,7 +5,6 @@ exports.showOrders = async (req, res) => {
     try {
         const orders = await Order.find().populate('product');
         res.render('orders', { orders });
-        res.status(200).json({ success: true, orders });
     } catch (err) {
         console.error(err);
         res.status(500).send('Failed to fetch orders.');
